@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from src.prompt_kit.schemas import SummarizeRequest, Extraction
+from src.prompt_kit.schemas import SummarizeRequest, Extraction, Classification
 
 def test_summarize_default_sentences():
     req = SummarizeRequest(text = "hello")
@@ -27,3 +27,9 @@ def test_extraction_rejects_data_as_list():
     #req = Extraction.model_validate_json('{"data": ["name": "john", "age": "15"]}')
     with pytest.raises(ValidationError):
         Extraction.model_validate_json('{"data": ["john","15"]}')
+
+def test_classification_requires_confidence():
+    with pytest.raises(ValidationError):
+        Classification.model_validate_json(
+            '{"lable": "shipping", "reasoning", "late order"}'
+        )

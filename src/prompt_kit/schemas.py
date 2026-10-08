@@ -18,7 +18,7 @@ class Summary(BaseModel):
 
 class Classification(BaseModel):
     label: str = Field(min_length = 1)
-    confidence: float = Field(default = 0, ge = 0, le = 1)
+    confidence: float = Field(ge = 0, le = 1)
     reasoning: str = Field(min_length = 1)
 
 class Extraction(BaseModel):

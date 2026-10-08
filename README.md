@@ -50,8 +50,15 @@ tests/         # pytest tests
 - [x] Project setup with uv
 - [x] Request and response schemas
 - [x] Schema tests
-- [ ] Ollama client with structured output
+- [x] First Ollama call with schema-constrained JSON output
+- [ ] Restrict classification labels to the caller's list
 - [ ] Validation and retry logic
 - [ ] FastAPI endpoints
 - [ ] Eval set and scoring script
 - [ ] Dockerfile
+
+## Notes
+
+- Ollama's default context window can exhaust RAM on modest machines, so calls set `num_ctx` explicitly (4096).
+- Ollama silently ignores misspelled option names, so options are kept in one place.
+- Response fields with defaults can be skipped by the model, so required fields must have no default.
