@@ -1,6 +1,7 @@
 import ollama
 from typing import Literal
 from pydantic import Field, create_model, ValidationError
+from .schemas import Summary
 
 MODEL = "llama3.2:3b"
 OPTIONS = {"num_ctx": 4096, "temperature": 0}
@@ -25,6 +26,14 @@ def classify(text: str, labels: list[str]):
     )
 
     return generate(prompt, model_cls)
+
+def summarize(text: str, max_sentences: int):
+    prompt = (
+        f"Summarize the text in at most {max_sentences} sentences.\n"
+        f"Also list the key points as short bullet strings.\n"
+        f"Text: {text}"
+    )
+    return generate(prompt, Summary)
 
 MAX_ATTEMPTS = 3
 
