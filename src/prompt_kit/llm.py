@@ -1,7 +1,7 @@
 import ollama
 from typing import Literal
 from pydantic import Field, create_model, ValidationError
-from .schemas import Summary
+from .schemas import Summary, Extraction
 
 MODEL = "llama3.2:3b"
 OPTIONS = {"num_ctx": 4096, "temperature": 0}
@@ -34,6 +34,23 @@ def summarize(text: str, max_sentences: int):
         f"Text: {text}"
     )
     return generate(prompt, Summary)
+
+def build_extraction_model(fields: list[str]):
+    return create_model(
+        "DynamicExtraction",
+        **{name: (str | None, ...) for name in fields},
+    )
+
+def extract(text: str, fields: list[str]):
+    model_cls = build_extraction_model(fields)
+    prompt = (
+        f"Extract these fields from the text: {', '.join(fields)}.\n"
+        f"Use only information stated in the text.\n"
+        f"If a field is not stated, use null. Do not guess.\n\n"
+        f"Text: {text}"
+    )
+    result = generate(prompt, model_cls)
+    return Extraction(data = result.model_dump())
 
 MAX_ATTEMPTS = 3
 
