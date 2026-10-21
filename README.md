@@ -62,3 +62,9 @@ tests/         # pytest tests
 - Ollama's default context window can exhaust RAM on modest machines, so calls set `num_ctx` explicitly (4096).
 - Ollama silently ignores misspelled option names, so options are kept in one place.
 - Response fields with defaults can be skipped by the model, so required fields must have no default.
+
+##Eval Results
+
+| Task | Cases | Correct | Avg latency |
+|---|---|---|---|
+| classify | 16 | 14 | 3.2s |

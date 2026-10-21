@@ -1,0 +1,23 @@
+{
+  "classify": {
+    "labels": ["billing", "shipping", "technical"],
+    "cases": [
+      {"text": "I was charged twice for my order", "expected": "billing"},
+      {"text": "My refund still hasn't shown up on my card", "expected": "billing"},
+      {"text": "The invoice amount doesn't match what I paid", "expected": "billing"},
+      {"text": "My package has been stuck in transit for a week", "expected": "shipping"},
+      {"text": "The courier left my parcel at the wrong address", "expected": "shipping"},
+      {"text": "When will my order be delivered?", "expected": "shipping"},
+      {"text": "The app crashes every time I open settings", "expected": "technical"},
+      {"text": "I can't log in even after resetting my password", "expected": "technical"},
+      {"text": "The website shows a 500 error on checkout", "expected": "technical"},
+      {"text": "Hello, I have a question", "expected": "unknown"},
+      {"text": "Thanks, have a nice day!", "expected": "unknown"},
+      {"text": "Do you sell gift cards?", "expected": "unknown"},
+      {"text": "I was charged extra for shipping", "expected": "billing"},
+      {"text": "The tracking page says delivered but I got nothing", "expected": "shipping"},
+      {"text": "my paymnt faild and the app froze", "expected": "technical"},
+      {"text": "Can I change my delivery address and also get an invoice?", "expected": "shipping"}
+    ]
+  }
+}

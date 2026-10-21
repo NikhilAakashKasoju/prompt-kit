@@ -20,10 +20,12 @@ def classify(text: str, labels: list[str]):
     model_cls = build_classification_model(allowed)
 
     prompt = (
-        f"Classify the text into exactly one of these labels: {', '.join(allowed)}.\n\n"
-        f"use 'unknown' only if none of the other labels fit.\n\n"
-        f"Text: {text}"
-    )
+    f"Classify the text into exactly one of these labels: {', '.join(allowed)}.\n"
+    f"Use 'unknown' for greetings, general questions, or anything that does not "
+    f"clearly belong to one of the other labels.\n\n"
+    f"If the text is about charges, payments or refunds, choose billing even if it mentions shipping or the app.\n"
+    f"Text: {text}"
+)
 
     return generate(prompt, model_cls)
 
