@@ -67,8 +67,9 @@ tests/         # pytest tests
 
 | Task | Cases | Result | Avg latency |
 |---|---|---|---|
-| classify | 16 | 15/16 correct | 2.1s |
+| classify | 16 | 15/16 correct | 2.3s |
 | extract | 5 (19 fields) | 17/19 fields correct, 0/5 hallucinated | n/a |
+| summarize | 3 | 3/3 within sentence limit, 5/6 required words kept | 3.5s |
 
 Known limitations:
 - Confidence scores from the model are not calibrated (wrong answers often score the same as right ones).

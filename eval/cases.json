@@ -49,5 +49,24 @@
       "expected": {"person": "Dr. Mehta", "day": "Friday", "time": "3pm", "room": "204", "topic": null}
     }
   ]
+},
+"summarize": {
+  "cases": [
+    {
+      "text": "FastAPI is a Python web framework for building APIs. It uses type hints to validate data automatically and generates interactive documentation. It is fast and popular for machine learning services.",
+      "max_sentences": 2,
+      "must_mention": ["fastapi", "api"]
+    },
+    {
+      "text": "The city council voted on Tuesday to ban cars from the old market district starting in January. Shop owners were split, with some fearing lost sales and others expecting more foot traffic. The council will review the effect after six months and may extend the ban to nearby streets if air quality improves.",
+      "max_sentences": 2,
+      "must_mention": ["ban", "january"]
+    },
+    {
+      "text": "Regular exercise lowers the risk of heart disease, improves sleep and helps manage stress. Adults are advised to get about 150 minutes of moderate activity each week. Even short walks count, and starting small makes the habit easier to keep.",
+      "max_sentences": 1,
+      "must_mention": ["exercise", "150"]
+    }
+  ]
 }
 }
