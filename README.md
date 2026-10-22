@@ -63,8 +63,14 @@ tests/         # pytest tests
 - Ollama silently ignores misspelled option names, so options are kept in one place.
 - Response fields with defaults can be skipped by the model, so required fields must have no default.
 
-##Eval Results
+## Eval results
 
-| Task | Cases | Correct | Avg latency |
+| Task | Cases | Result | Avg latency |
 |---|---|---|---|
-| classify | 16 | 14 | 3.2s |
+| classify | 16 | 15/16 correct | 2.1s |
+| extract | 5 (19 fields) | 17/19 fields correct, 0/5 hallucinated | n/a |
+
+Known limitations:
+- Confidence scores from the model are not calibrated (wrong answers often score the same as right ones).
+- Texts that mix two topics (e.g. a charge for shipping) can land on either label.
+- The model sometimes returns `null` for a value that is in the text (missed, not invented).

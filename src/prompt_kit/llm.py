@@ -18,21 +18,20 @@ def build_classification_model(labels: list[str]):
 def classify(text: str, labels: list[str]):
     allowed = labels + ["unknown"]
     model_cls = build_classification_model(allowed)
-
     prompt = (
-    f"Classify the text into exactly one of these labels: {', '.join(allowed)}.\n"
-    f"Use 'unknown' for greetings, general questions, or anything that does not "
-    f"clearly belong to one of the other labels.\n\n"
-    f"If the text is about charges, payments or refunds, choose billing even if it mentions shipping or the app.\n"
-    f"Text: {text}"
-)
+        f"Classify the text into exactly one of these labels: {', '.join(allowed)}.\n"
+        f"Use 'unknown' for greetings, general questions, or anything that does not "
+        f"clearly belong to one of the other labels.\n"
+        f"Choose billing only when the main issue is a charge, payment or refund.\n\n"
+        f"Text: {text}"
+    )
 
     return generate(prompt, model_cls)
 
 def summarize(text: str, max_sentences: int):
     prompt = (
         f"Summarize the text in at most {max_sentences} sentences.\n"
-        f"Also list the key points as short bullet strings.\n"
+        f"Also list the key points as short bullet strings.\n\n"
         f"Text: {text}"
     )
     return generate(prompt, Summary)
@@ -45,7 +44,7 @@ def build_extraction_model(fields: list[str]):
 NULL_STRINGS = {"null", "none", "n/a", "na", ""}
 
 def clean_value(value):
-    if isinstance(value, str) and value.strip().islower() in NULL_STRINGS:
+    if isinstance(value, str) and value.strip().lower() in NULL_STRINGS:
         return None
     return value
 
@@ -54,6 +53,7 @@ def extract(text: str, fields: list[str]):
     prompt = (
         f"Extract these fields from the text: {', '.join(fields)}.\n"
         f"Use only information stated in the text.\n"
+        f"Copy each value exactly as written in the text.\n"
         f"If a field is not stated, use null. Do not guess.\n\n"
         f"Text: {text}"
     )
