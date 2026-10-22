@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from src.prompt_kit import main
-from src.prompt_kit.llm import LLMOutputError
+from src.prompt_kit.llm import LLMOutputError, LLMUnavailableError
 from src.prompt_kit.schemas import Classification, Extraction
 
 client = TestClient(main.app)
@@ -64,3 +64,16 @@ def test_extract_returns_data(monkeypatch):
 
     assert resp.status_code == 200
     assert resp.json()["data"]["email"] is None
+
+def test_classify_returns_503_when_server_down(monkeypatch):
+    def unavailable_classify(text, labels):
+        raise LLMUnavailableError("server down")
+
+    monkeypatch.setattr(main, "classify", unavailable_classify)
+
+    resp = client.post(
+        "/classify",
+        json={"text": "My order is late", "labels": ["billing", "shipping"]},
+    )
+
+    assert resp.status_code == 503

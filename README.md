@@ -112,7 +112,7 @@ These sets are small, and the prompts were tuned while looking at them, so treat
 - [x] FastAPI endpoints (`/classify`, `/summarize`, `/extract`)
 - [x] Eval set and scoring script
 - [x] API tests with a mocked model
-- [ ] Clear 503 when the model server is down
+- [x] Clear 503 when the model server is down
 - [ ] Prompts in separate files
 - [ ] Logging
 - [ ] Config through environment variables

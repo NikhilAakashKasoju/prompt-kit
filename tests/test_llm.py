@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import pytest
 
 from src.prompt_kit import llm
-from src.prompt_kit.llm import LLMOutputError, build_classification_model, generate, MAX_ATTEMPTS
+from src.prompt_kit.llm import LLMOutputError, LLMUnavailableError, build_classification_model, generate, MAX_ATTEMPTS
 
 def fake_reply(text):
     return SimpleNamespace(message=SimpleNamespace(content = text))
@@ -63,3 +63,14 @@ def test_generate_retries_after_invalid_reply(monkeypatch):
 
     assert result.label == "shipping"
     assert len(calls) == 2
+
+def test_generate_raises_unavailable_when_server_down(monkeypatch):
+    def fake_chat(**kwargs):
+        raise ConnectionError("no server")
+
+    monkeypatch.setattr(llm.ollama, "chat", fake_chat)
+
+    model_cls = build_classification_model(["billing", "shipping", "unknown"])
+
+    with pytest.raises(LLMUnavailableError):
+        generate("some prompt", model_cls)

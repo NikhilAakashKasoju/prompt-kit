@@ -65,18 +65,24 @@ MAX_ATTEMPTS = 3
 
 class LLMOutputError(Exception):
     """Raised when the model never produces valid output."""
-    
+
+class LLMUnavailableError(Exception):
+    """Raised when the model server cannot be reached or fails."""
+
 def generate(prompt: str, model_cls):
     messages = [{"role": "user", "content": prompt}]
     last_error = None
 
     for attempt in range(MAX_ATTEMPTS):
-        resp = ollama.chat(
-            model = MODEL,
-            messages = messages,
-            format = model_cls.model_json_schema(),
-            options = OPTIONS,
-        )
+        try:
+            resp = ollama.chat(
+                model = MODEL,
+                messages = messages,
+                format = model_cls.model_json_schema(),
+                options = OPTIONS,
+            )
+        except (ConnectionError, ollama.ResponseError) as e:
+            raise LLMUnavailableError(f"Model server unavailable: {e}")
 
         raw = resp.message.content
 
