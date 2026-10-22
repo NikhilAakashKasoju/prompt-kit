@@ -42,6 +42,12 @@ def build_extraction_model(fields: list[str]):
         "DynamicExtraction",
         **{name: (str | None, ...) for name in fields},
     )
+NULL_STRINGS = {"null", "none", "n/a", "na", ""}
+
+def clean_value(value):
+    if isinstance(value, str) and value.strip().islower() in NULL_STRINGS:
+        return None
+    return value
 
 def extract(text: str, fields: list[str]):
     model_cls = build_extraction_model(fields)
@@ -52,7 +58,8 @@ def extract(text: str, fields: list[str]):
         f"Text: {text}"
     )
     result = generate(prompt, model_cls)
-    return Extraction(data = result.model_dump())
+    cleaned = {k: clean_value(v) for k, v in result.model_dump().items()}
+    return Extraction(data = cleaned)
 
 MAX_ATTEMPTS = 3
 

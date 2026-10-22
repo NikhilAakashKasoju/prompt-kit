@@ -19,5 +19,35 @@
       {"text": "my paymnt faild and the app froze", "expected": "technical"},
       {"text": "Can I change my delivery address and also get an invoice?", "expected": "shipping"}
     ]
-  }
+  },
+  
+  "extract": {
+  "cases": [
+    {
+      "text": "Priya Sharma, 29, works as a data analyst in Pune.",
+      "fields": ["name", "age", "city", "email"],
+      "expected": {"name": "Priya Sharma", "age": "29", "city": "Pune", "email": null}
+    },
+    {
+      "text": "Invoice 4521 from Acme Corp dated 12 March 2025 for $1,200.",
+      "fields": ["invoice_number", "company", "date", "amount"],
+      "expected": {"invoice_number": "4521", "company": "Acme Corp", "date": "12 March 2025", "amount": "$1,200"}
+    },
+    {
+      "text": "The weather was nice today.",
+      "fields": ["name", "age"],
+      "expected": {"name": null, "age": null}
+    },
+    {
+      "text": "Call Rahul on 98765 43210 or email rahul@example.com.",
+      "fields": ["name", "phone", "email", "company"],
+      "expected": {"name": "Rahul", "phone": "98765 43210", "email": "rahul@example.com", "company": null}
+    },
+    {
+      "text": "Meeting with Dr. Mehta on Friday at 3pm in Room 204.",
+      "fields": ["person", "day", "time", "room", "topic"],
+      "expected": {"person": "Dr. Mehta", "day": "Friday", "time": "3pm", "room": "204", "topic": null}
+    }
+  ]
+}
 }
