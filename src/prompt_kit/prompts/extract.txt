@@ -1,0 +1,6 @@
+Extract these fields from the text: {fields}.
+Use only information stated in the text.
+Copy each value exactly as written in the text.
+If a field is not stated, use null. Do not guess.
+
+Text: {text}

@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import pytest
 
 from src.prompt_kit import llm
-from src.prompt_kit.llm import LLMOutputError, LLMUnavailableError, build_classification_model, generate, MAX_ATTEMPTS
+from src.prompt_kit.llm import LLMOutputError, LLMUnavailableError, build_classification_model, generate, MAX_ATTEMPTS, load_prompt
 
 def fake_reply(text):
     return SimpleNamespace(message=SimpleNamespace(content = text))
@@ -74,3 +74,8 @@ def test_generate_raises_unavailable_when_server_down(monkeypatch):
 
     with pytest.raises(LLMUnavailableError):
         generate("some prompt", model_cls)
+
+def test_prompt_templates_fill_in():
+    assert "billing" in load_prompt("classify").format(labels="billing, unknown", text="hi")
+    assert "3 sentences" in load_prompt("summarize").format(max_sentences=3, text="hi")
+    assert "name" in load_prompt("extract").format(fields="name", text="hi")

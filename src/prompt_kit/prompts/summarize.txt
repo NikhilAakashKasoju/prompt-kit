@@ -1,0 +1,4 @@
+Summarize the text in at most {max_sentences} sentences.
+Also list the key points as short bullet strings.
+
+Text: {text}

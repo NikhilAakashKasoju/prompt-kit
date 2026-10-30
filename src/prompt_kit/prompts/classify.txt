@@ -1,0 +1,5 @@
+Classify the text into exactly one of these labels: {labels}.
+Use 'unknown' for greetings, general questions, or anything that does not clearly belong to one of the other labels.
+Choose billing only when the main issue is a charge, payment or refund.
+
+Text: {text}
